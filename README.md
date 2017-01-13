@@ -2,8 +2,8 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 
 ```sh
-1. git clone git@github.com:vdineva/....git
-2. cd <>
+1. git clone git@github.com:vdineva/SearchableProductTable.git
+2. cd SearchableProductTable
 3. npm install
 4. npm run start
 ```
