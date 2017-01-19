@@ -61,40 +61,47 @@ class SearchableProductTable extends Component {
       return;
     }
 
-    const filterValue = this.state.filterValue;
-    const value = property_value.value;
+    let filterValue = this.state.filterValue;
+    let value = property_value.value;
+    let stringType;
+
+    if (selectedProperty.type === 'string') {
+      filterValue = filterValue.toLowerCase();
+      value = value.toLowerCase();
+      stringType = true;
+    }
 
     switch (this.state.filterOperator) {
       case 'contains':
       case 'any':
-        if (selectedProperty.type === 'string') {
-          return (value.toLowerCase().includes(filterValue.toLowerCase()));
+        if (stringType) {
+          return value.includes(filterValue);
         } else {
-          return (this.state.enumeratedFilterValue.includes(value));
+          return this.state.enumeratedFilterValue.includes(value);
         }
       case 'in':
-        if (selectedProperty.type === 'string') {
-          return (value.toLowerCase().includes(filterValue.toLowerCase()));
+        if (stringType) {
+          return value.includes(filterValue);
         } else {
-          return (this.state.enumeratedFilterValue.indexOf(value) > -1);
+          return this.state.enumeratedFilterValue.indexOf(value) > -1;
         }
       case 'none':
-        if (selectedProperty.type === 'string') {
-          return (filterValue.indexOf(value) === -1);
+        if (stringType) {
+          return value.indexOf(filterValue) === -1;
         } else {
-          return (this.state.enumeratedFilterValue.indexOf(value) === -1);
+          return this.state.enumeratedFilterValue.indexOf(value) === -1;
         }
       case 'greater_than':
-        return (value > filterValue);
+        return value > filterValue;
       case 'less_than':
-        return (value < filterValue);
+        return value < filterValue;
       case 'equals':
-        if (selectedProperty.type === 'string') {
-          return (value.toLowerCase() === filterValue.toLowerCase());
+        if (stringType) {
+          return value === filterValue;
         } else if (selectedProperty.type === 'number') {
-          return (value.toString() === filterValue);
+          return value.toString() === filterValue;
         } else {
-          return (this.state.enumeratedFilterValue.includes(value));
+          return this.state.enumeratedFilterValue.includes(value);
         }
       default:
         break;
