@@ -8,7 +8,7 @@ class Filters extends React.Component {
 
     this.filterChange = this.filterChange.bind(this);
     this.filterValueChange = this.filterValueChange.bind(this);
-    this.clearFilterValues = this.clearFilterValues.bind(this);
+    this.clearFilters = this.clearFilters.bind(this);
   }
 
   filterChange() {
@@ -19,8 +19,8 @@ class Filters extends React.Component {
     this.props.onFilterValueChanged(value);
   }
 
-  clearFilterValues() {
-    this.props.clearFilterValues();
+  clearFilters() {
+    this.props.clearFilters();
   }
 
   render() {
@@ -37,7 +37,7 @@ class Filters extends React.Component {
     });
 
     return (
-      <div id="filter-container" className="row">
+      <div id="filter-container" className="clearfix">
         <select
           value={this.props.filterProperty}
           onChange={this.filterChange}
@@ -70,7 +70,7 @@ class Filters extends React.Component {
           )
         }
 
-        <button type="button" className="btn btn-default pull-right" onClick={this.clearFilterValues}>Clear</button>
+        <button type="button" className="btn btn-default pull-right" onClick={this.clearFilters}>Clear</button>
       </div>
     )
   }

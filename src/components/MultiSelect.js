@@ -13,7 +13,7 @@ class MultiSelect extends React.Component {
                     .filter(opt =>  opt.selected)
                     .map(val => val.value);
 
-    this.props.filterChange(selected, true);
+    this.props.filterChange(selected);
   }
 
   render() {

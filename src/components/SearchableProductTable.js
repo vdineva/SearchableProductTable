@@ -18,7 +18,7 @@ class SearchableProductTable extends Component {
 
     this.handleFilterChanged = this.handleFilterChanged.bind(this);
     this.handleFilterValueChanged = this.handleFilterValueChanged.bind(this);
-    this.clearFilterValues = this.clearFilterValues.bind(this);
+    this.clearFilters = this.clearFilters.bind(this);
     this.filterProducts = this.filterProducts.bind(this);
   }
 
@@ -26,12 +26,13 @@ class SearchableProductTable extends Component {
     this.setState({
       filterProperty: propertyName,
       filterOperator: operator,
-      filterValue: '',
-      enumeratedFilterValue: []
+      //reset the filter values when either the filterProperty or filterOperator changes
+      filterValue: this.initialState.filterValue,
+      enumeratedFilterValue: this.initialState.enumeratedFilterValue
     });
   }
 
-  handleFilterValueChanged(value, multi) {
+  handleFilterValueChanged(value) {
     if (typeof value === 'string') {
       this.setState({
         filterValue: value
@@ -43,7 +44,7 @@ class SearchableProductTable extends Component {
     }
   }
 
-  clearFilterValues() {
+  clearFilters() {
     this.setState(this.initialState);
   }
 
@@ -103,7 +104,7 @@ class SearchableProductTable extends Component {
     let selectedProperty = this.props.properties.find((property) => {
       return property.name === this.state.filterProperty;
     });
-    
+
     let selectedOperator = this.props.operators.find((operator) => {
       return operator.id === this.state.filterOperator;
     });
@@ -122,17 +123,19 @@ class SearchableProductTable extends Component {
 
     return (
       <div id="container">
-        <Filters
-          properties={properties}
-          operators={operators}
-          filterValue={this.state.filterValue}
-          enumeratedFilterValue={this.state.enumeratedFilterValue}
-          filterProperty={this.state.filterProperty}
-          filterOperator={this.state.filterOperator}
-          onFilterChanged={this.handleFilterChanged}
-          onFilterValueChanged={this.handleFilterValueChanged}
-          clearFilterValues={this.clearFilterValues}
-          />
+        <div className="row">
+          <Filters
+            properties={properties}
+            operators={operators}
+            filterValue={this.state.filterValue}
+            enumeratedFilterValue={this.state.enumeratedFilterValue}
+            filterProperty={this.state.filterProperty}
+            filterOperator={this.state.filterOperator}
+            onFilterChanged={this.handleFilterChanged}
+            onFilterValueChanged={this.handleFilterValueChanged}
+            clearFilters={this.clearFilters}
+            />
+        </div>
 
         <div className="row">
           <ProductTable
